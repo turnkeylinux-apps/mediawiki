@@ -1,0 +1,218 @@
+turnkey-mediawiki-12.0 (1) turnkey; urgency=low
+
+  * MediaWiki: Upgraded to latest upstream package.
+
+  * Major component versions
+
+    mediawiki       1:1.15.5-2squeeze4
+    apache2         2.2.16-6+squeeze7
+    mysql-server    5.1.63-0+squeeze1
+    phpmyadmin      4:3.3.7-7
+
+  * Note: Please refer to turnkey-core's changelog for changes common to all
+    appliances. Here we only describe changes specific to this appliance.
+
+ -- Alon Swartz <alon@turnkeylinux.org>  Wed, 01 Aug 2012 08:00:00 +0200
+
+turnkey-mediawiki-11.3 (1) turnkey; urgency=low
+
+  * Installed security updates.
+  * Enabled etckeeper garbage collection by default.
+  * Upgraded to latest inithooks version (adhoc re-initialization via turnkey-init)
+
+ -- Alon Swartz <alon@turnkeylinux.org>  Mon, 05 Dec 2011 10:48:44 +0000
+
+turnkey-mediawiki-11.2 (1) turnkey; urgency=low
+
+  * Installed security updates.
+  * Added HubDNS package and firstboot configuration.
+
+ -- Alon Swartz <alon@turnkeylinux.org>  Fri, 15 Jul 2011 07:47:08 +0000
+
+turnkey-mediawiki-11.1 (1) turnkey; urgency=low
+
+  * MediaWiki:
+
+    - Patched FCKeditor to be php5.3 compliant.
+    - Updated ConfirmEdit to be php5.3 compliant.
+    - Added convenience symlinks (/var/www/{webroot, config, extensions}).
+
+  * Set MediaWiki admin password on firstboot (convenience, security).
+
+  * Set MySQL root password on firstboot (convenience, security).
+
+  * Force MySQL to use Unicode/UTF8.
+
+  * Added php-xcache PHP opcode cacher / optimizer (performance).
+
+  * Set postfix MTA myhostname to localhost (bugfix).
+
+  * Enabled tracking in PHPMyAdmin.
+
+  * Major component versions:
+
+    mediawiki       1:1.15.1-1ubuntu2.1
+    mysql-server    5.1.41-3ubuntu12.8
+    apache2         2.2.14-5ubuntu8.4
+    phpmyadmin      4:3.3.2-1
+
+  * Note: Please refer to turnkey-core's changelog for changes common to all
+    appliances. Here we only describe changes specific to this appliance.
+
+ -- Alon Swartz <alon@turnkeylinux.org>  Sun, 19 Dec 2010 15:01:05 +0200
+
+turnkey-mediawiki-2009.10 (2) hardy; urgency=low
+
+  * Installed all security updates (see manifest for package versions).
+
+  * Install security updates on firstboot (except when running live).
+
+  * Bugfix: Updated apt preferences for auto-security updates (LP#550307).
+
+  * Trick webmin into not checking for upgrades (managed by apt).
+
+  * Updated di-live mysql mechanism and secret regeneration.
+
+  * Included latest version of inithooks and updated scripts.
+
+  * Included wget as per common request.
+
+ -- Alon Swartz <alon@turnkeylinux.org>  Mon, 29 Mar 2010 09:02:11 +0200
+
+turnkey-mediawiki-2009.10 (1) hardy; urgency=low
+
+  * Upgraded to MediaWiki 1.15.1
+
+    - Upgraded extensions to be compatible with 1.15
+    - Added AWC forum extension.
+
+  * Reverted FHS compliance patch (extension directory location).
+
+    - Not yet accepted upstream.
+    - Prioritizing ability to upgrade directly from upstream.
+
+  * PHPMyAdmin improvements:
+
+    - Added pmadb (linked tables) advanced features to PHPMyAdmin (LP#426303).
+    - Pinned phpmyadmin to update directly from Debian (security).
+
+  * di-live (installer) MySQL component:
+
+    - Added support for complex passwords (LP#416515).
+    - Added CLI options (user/pass/query/chroot).
+
+  * Bugfixes: 
+  
+    - Increase PHP memory limit to 32M to match Apache PHP limit (#LP:360606).
+    - Removed Wikipedia namespace declarations from preloader extension.
+    - Removed build systems hostname from MySQL user table.
+
+  * Regenerates all secrets during installation / firstboot (security).
+
+  * Major component versions:
+
+    mediawiki       1:1.15.1-1
+    mysql-server    5.0.51a-3ubuntu5.4
+    apache2         2.2.8-1ubuntu0.11
+    phpmyadmin      2.11.8.1-5+lenny1
+
+  * Note: Please refer to turnkey-core's changelog for changes common to all
+    appliances. Here we only describe changes specific to this appliance.
+
+ -- Alon Swartz <alon@turnkeylinux.org>  Tue, 29 Sep 2009 15:39:41 +0200
+
+turnkey-mediawiki-2009.04 (1) hardy; urgency=low
+
+  * upgraded fckeditor extension (fixes LP#358294 - corrupted links)
+
+ -- Alon Swartz <alon@turnkeylinux.org>  Sun, 12 Apr 2009 15:51:11 +0200
+
+turnkey-mediawiki-2009.03 (1) hardy; urgency=low
+
+  * upgraded mediawiki to version 1.14
+
+    - upgraded extensions to be compatible with 1.14
+    - patched FCKeditor to fix issues with 1.14
+    - removed Universal Edit Button (integrated into 1.14 core)
+
+  * moved extensions to /usr/local/share (better compliance with FHS)
+
+  * fixed phpmyadmin error: cannot load mcrypt extension (LP#345275)
+
+  * improved MediaWiki passwords/secrets (security)
+
+    - wiki database password is now randomly generated, and regenerated
+      during installation
+    - better random secret regeneration during installation
+
+  * major component versions
+
+    mediawiki       1:1.14.0-1
+    mysql-server    5.0.51a-3ubuntu5.4
+    apache2         2.2.8-1ubuntu0.5
+    php5            5.2.4-2ubuntu5.5
+    phpmyadmin      2.11.8.1-5
+
+ -- Alon Swartz <alon@turnkeylinux.org>  Sun, 22 Mar 2009 17:15:10 +0200
+
+turnkey-mediawiki-2009.02 (1) hardy; urgency=low
+
+  * added SSL support
+
+  * added postfix MTA (bound to localhost) to allow sending of email from
+    MediaWiki (e.g., password recovery). Also added webmin-postfix module for
+    convenience.
+
+  * includes many useful/popular MediaWiki extensions:
+
+    - FCKeditor: WYSIWYG editor for wiki pages
+
+    - ParserFunctions: Enhances parser with logical functions
+
+    - StringFunctions: Additional set of parser functions that operate on strings
+
+    - CategoryTree: Provides a dynamic view of the category structure as a tree
+
+    - Renameuser: Special page allowing authorised users to rename user accounts
+
+    - Preloader: Populate new pages with template content depending on namespace
+
+    - CharInsert: JavaScript character insert boxes used on edit type pages
+
+    - ConfirmEdit: Math captcha (by default only if edit includes hyperlink)
+
+    - Gadgets: JS/CSS-based gadgets
+
+    - SyntaxHighlight_GeSHi: adds <source> tag to present formatted source code
+
+    - Cite: Create footnotes
+
+    - UniversalEditButton: adds support for the UEB firefox extension
+
+  * regenerate MediaWiki secret key during installation (security)
+
+  * improvements to default MediaWiki configuration
+
+    - replaced deprecated wgProxyKey with wgSecretKey
+    - disable experimental charset support (#LP:310627)
+    - blanked out sitename (was TurnKeyLinux)
+    - ensure that the wiki outputs clean and compliant HTML ($wgUseTidy)
+
+  * mysql-related improvements
+
+    - include PhpMyAdmin (listening on port 12322 - uses SSL)
+    - set empty mysql root password in live/demo mode (for convenience)
+    - support configuring mysql root password during installation
+
+  * major component versions
+
+    mediawiki       1.13.3-1
+    mysql-server    5.0.51a-3ubuntu5.4
+    apache2         2.2.8-1ubuntu0.3
+    php5            5.2.4-2ubuntu5.4
+    phpmyadmin      2.11.8.1-5
+
+  * note: please refer to turnkey-core's changelog for changes common to all
+    appliances. Here we only describe changes specific to this appliance.
+
+ -- Alon Swartz <alon@turnkeylinux.org>  Thu, 29 Jan 2009 14:31:48 +0200

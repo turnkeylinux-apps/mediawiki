@@ -1,0 +1,9 @@
+#include <turnkey/base>
+#include <turnkey/lamp>
+
+mediawiki
+php5-cli            /* used by conf.d and useful for debugging and maintenance */
+php5-gd             /* mediawiki images support */
+php-geshi           /* needed by SyntaxHighlight_GeSHi extension */
+tidy                /* needed by $wgUseTidy */
+
