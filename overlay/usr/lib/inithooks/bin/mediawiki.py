@@ -32,12 +32,21 @@ def main():
             usage()
         elif opt == '--pass':
             password = val
+            if password.lower() == "admin":
+                usage("illegal password specified")
 
     if not password:
-        d = Dialog('TurnKey Linux - First boot configuration')
-        password = d.get_password(
-            "MediaWiki Password",
-            "Enter new password for the MediaWiki 'admin' account.")
+        while True:
+            d = Dialog('TurnKey Linux - First boot configuration')
+            password = d.get_password(
+                "MediaWiki Password",
+                "Enter new password for the MediaWiki 'admin' account.")
+
+            if password.lower() == "admin":
+                d.error("Illegal password, please try again.")
+                continue
+
+            break
 
     hashpass = hashlib.md5(password).hexdigest()
     hashpass = hashlib.md5("1-" + hashpass).hexdigest()     # userid 1
