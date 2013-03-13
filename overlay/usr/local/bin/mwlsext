@@ -1,0 +1,29 @@
+#!/usr/bin/python
+# Copyright (c) 2013 Alon Swartz <alon@turnkeylinux.org>
+
+import os
+
+EXT_AVAILABLE = "/etc/mediawiki-extensions/extensions-available"
+EXT_ENABLED = "/etc/mediawiki-extensions/extensions-enabled"
+
+def main():
+    available = set(os.listdir(EXT_AVAILABLE))
+    enabled = set(os.listdir(EXT_ENABLED))
+    disabled = available - enabled
+
+    print "MediaWiki Extensions"
+    print
+
+    for ext in enabled:
+        print "[enabled] %s" % ext
+
+    for ext in disabled:
+        print "[disabled] %s" % ext
+
+    print
+    print "To enable an extension: mwenext <extension>"
+    print "To disable an extension: mwdisext <extension>"
+
+if __name__ == "__main__":
+    main()
+
