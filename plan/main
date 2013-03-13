@@ -2,8 +2,14 @@
 #include <turnkey/lamp>
 
 mediawiki
+mediawiki-extensions-base
+mediawiki-extensions-collection
+mediawiki-extensions-confirmedit
+mediawiki-extensions-fckeditor
+mediawiki-extensions-geshi
+mediawiki-extensions-openid
+
 php5-cli            /* used by conf.d and useful for debugging and maintenance */
 php5-gd             /* mediawiki images support */
-php-geshi           /* needed by SyntaxHighlight_GeSHi extension */
 tidy                /* needed by $wgUseTidy */
 
