@@ -1,16 +1,15 @@
 #!/bin/sh -ex
 
-DB_NAME=wiki_db
-DB_USER_NAME=wiki_user
-DB_USER_PASS=$(mcookie)
+DB_NAME=mediawiki
+DB_USER=mediawiki
+DB_PASS=$(mcookie)
+
+ADMIN_NAME=admin
+ADMIN_PASS=turnkey
 
 WIKI_ETC=/etc/mediawiki
-WIKI_SRC=/usr/local/src
 WIKI_SHARE=/usr/share/mediawiki
 WIKI_VAR_LIB=/var/lib/mediawiki
-
-WIKI_ADMIN_NAME=admin
-WIKI_ADMIN_PASS=turnkey
 
 # convenience symlinks
 ln -s $WIKI_SHARE /var/www/webroot
@@ -27,51 +26,23 @@ updateconf() {
 }
 
 updateconf '\$wgDBname' $DB_NAME
-updateconf '\$wgDBuser' $DB_USER_NAME
-updateconf '\$wgDBpassword' $DB_USER_PASS
+updateconf '\$wgDBuser' $DB_USER
+updateconf '\$wgDBpassword' $DB_PASS
 updateconf '\$wgSecretKey' $(mcookie)
-
-# unpack extensions
-# must be done prior to interacting with mediawiki if they are enabled
-for extension in $(ls $WIKI_VAR_LIB/extensions/*.tar.gz); do
-    tar -zxf $extension -C $WIKI_VAR_LIB/extensions
-    rm -f $extension
-done
-chown -R root: $WIKI_VAR_LIB/extensions
-
-# needed for extension: SyntaxHighlight_GeSHi
-ln -s /usr/share/php-geshi $WIKI_VAR_LIB/extensions/SyntaxHighlight_GeSHi/geshi
-
-# patch fckeditor to not display turnkey-credit
-cat >> $WIKI_VAR_LIB/extensions/FCKeditor/fckeditor/editor/skins/default/fck_dialog.css<<EOF
-#turnkey-credit {
-    display: none;
-}
-EOF
-
-# patch fckeditor to work with php5.3
-# http://www.mwusers.com/forums/showthread.php?12362-FCKEditor-error
-sed -i 's|onCustomEditor(&$article, &$user)|onCustomEditor($article, $user)|' $WIKI_VAR_LIB/extensions/FCKeditor/FCKeditor.body.php
-
-# awc forum extension
-tar -zxf $WIKI_SRC/awc-forum*.tar.gz -C $WIKI_SRC
-cp -a $WIKI_SRC/awc-forum*/extensions/* $WIKI_VAR_LIB/extensions
-cp -a $WIKI_SRC/awc-forum*/includes/* $WIKI_VAR_LIB/includes
-rm -rf $WIKI_SRC/awc-forum*
 
 # start mysql server and create database
 /etc/init.d/mysql start
 $MYSQL_ADMIN create $DB_NAME
 
 # create database user with privileges on the database
-$MYSQL_BATCH --execute "grant all privileges on $DB_NAME.* to $DB_USER_NAME@localhost identified by '$DB_USER_PASS'; flush privileges;"
+$MYSQL_BATCH --execute "grant all privileges on $DB_NAME.* to $DB_USER@localhost identified by '$DB_PASS'; flush privileges;"
 
 # configure database
 cat $WIKI_SHARE/maintenance/tables.sql | $MYSQL_BATCH --database=$DB_NAME
 cat $WIKI_SHARE/maintenance/interwiki.sql | $MYSQL_BATCH --database=$DB_NAME
 
 # create wiki admin user
-php $WIKI_SHARE/maintenance/createAndPromote.php --bureaucrat $WIKI_ADMIN_NAME $WIKI_ADMIN_PASS
+php $WIKI_SHARE/maintenance/createAndPromote.php --bureaucrat $ADMIN_NAME $ADMIN_PASS
 
 # initialize wiki stats
 php $WIKI_SHARE/maintenance/initStats.php
@@ -86,7 +57,7 @@ for information on using the wiki software.<br><br>
 * [http://www.mediawiki.org/wiki/Manual:Configuration_settings MediaWiki Configuration settings list]
 * [http://www.mediawiki.org/wiki/Manual:FAQ MediaWiki FAQ]
 * [http://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki release mailing list]
-" | php $WIKI_SHARE/maintenance/edit.php -u $WIKI_ADMIN_NAME --no-rc -b Main_Page
+" | php $WIKI_SHARE/maintenance/edit.php -u $ADMIN_NAME --no-rc -b Main_Page
 
 # apache configuration
 rm -f /etc/apache2/conf.d/mediawiki.conf
@@ -95,5 +66,13 @@ ln -s $WIKI_ETC/apache.conf /etc/apache2/sites-available/mediawiki
 a2dissite default
 a2ensite mediawiki
 
+# enable fckeditor by default, and patch to not display turnkey-credit
+mwenext FCKeditor.php
+
+for f in /usr/share/fckeditor/editor/skins/*/fck_dialog.css; do
+    echo "#turnkey-credit { display: none; }" >> $f
+done
+
 # stop mysql server
 /etc/init.d/mysql stop
+
