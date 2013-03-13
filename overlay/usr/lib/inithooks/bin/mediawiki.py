@@ -43,7 +43,7 @@ def main():
     hashpass = hashlib.md5("1-" + hashpass).hexdigest()     # userid 1
 
     m = MySQL()
-    m.execute('UPDATE wiki_db.user SET user_password=\"%s\" WHERE user_id=\"1\";' % hashpass)
+    m.execute('UPDATE mediawiki.user SET user_password=\"%s\" WHERE user_id=\"1\";' % hashpass)
 
 if __name__ == "__main__":
     main()
