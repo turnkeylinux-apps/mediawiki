@@ -1,3 +1,28 @@
+turnkey-mediawiki-12.1 (1) turnkey; urgency=low
+
+  * MediaWiki:
+
+    - Database name and user are now mediawiki (was wiki_db, wiki_user).
+    - Inithook updated to not allow 'admin' as password (LP#1019620).
+
+    - Extensions are now installed via selected Debian packages:
+
+        - mediawiki-extensions-base
+        - mediawiki-extensions-collection
+        - mediawiki-extensions-confirmedit
+        - mediawiki-extensions-geshi
+        - mediawiki-extensions-openid
+        - mediawiki-extensions-fckeditor (enabled by default)
+
+    - Custom script (mwlsext) to display enabled/available extensions.
+
+  * Added phpsh (interative shell for PHP) and php5-cli (generically useful).
+
+  * Note: Please refer to turnkey-core's changelog for changes common to all
+    appliances. Here we only describe changes specific to this appliance.
+
+ -- Alon Swartz <alon@turnkeylinux.org>  Sun, 07 Apr 2013 08:00:00 +0200
+
 turnkey-mediawiki-12.0 (1) turnkey; urgency=low
 
   * MediaWiki: Upgraded to latest upstream package.
