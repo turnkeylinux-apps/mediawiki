@@ -20,28 +20,16 @@ and on top of that:
       - Maximum filesize: 2MB
       - Supported file types: png, gif, jpg, jpeg
 
-- Bundled MediaWiki extensions (installed to /var/www/extensions)
-  **Enabled by default:** to disable unneeded extensions edit
-  /etc/mediawiki/extensions.php
-   
-   - `FCKeditor`_: WYSIWYG editor for wiki pages.
-   - `ParserFunctions`_: Enhances parser with logical functions.
-   - `StringFunctions`_: Additional set of parser functions that operate
-     on strings.
-   - `CategoryTree`_: Provides a dynamic view of the category structure
-     as a tree.
-   - `Renameuser`_: Special page allowing authorised users to rename
-     user accounts.
-   - `Preloader`_: Populate new pages with template content depending on
-     namespace.
-   - `CharInsert`_: JavaScript character insert boxes used on edit type
-     pages.
-   - `ConfirmEdit`_: Math captcha.
-   - `Gadgets`_: JS/CSS-based gadgets.
-   - `SyntaxHighlight\_GeSHi`_: adds *<source>* tag to present formatted
-     source code.
-   - `Cite`_: Create footnotes.
-   - `AWC's Forum`_: Forum integration.
+   - MediaWiki extensions are installed via selected Debian packages.
+     Includes a custom script ``mwlsext`` to display enabled/available
+     extensions:
+
+        - mediawiki-extensions-base
+        - mediawiki-extensions-collection
+        - mediawiki-extensions-confirmedit
+        - mediawiki-extensions-geshi
+        - mediawiki-extensions-openid
+        - mediawiki-extensions-fckeditor (enabled by default)
 
 - SSL support out of the box.
 - `PHPMyAdmin`_ administration frontend for MySQL (listening on port
