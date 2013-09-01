@@ -66,13 +66,6 @@ ln -s $WIKI_ETC/apache.conf /etc/apache2/sites-available/mediawiki
 a2dissite default
 a2ensite mediawiki
 
-# enable fckeditor by default, and patch to not display turnkey-credit
-mwenext FCKeditor.php
-
-for f in /usr/share/fckeditor/editor/skins/*/fck_dialog.css; do
-    echo "#turnkey-credit { display: none; }" >> $f
-done
-
 # stop mysql server
 /etc/init.d/mysql stop
 
