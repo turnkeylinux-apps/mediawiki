@@ -1,12 +1,19 @@
 turnkey-mediawiki-13.0 (1) turnkey; urgency=low
 
-  * Please refer to turnkey-core's changelog for changes common to all
-    appliances, as well as the following git logs:
-    
-    - https://github.com/turnkeylinux/common
-    - https://github.com/turnkeylinux-apps/mediawiki
+  * MediaWiki:
 
- -- Alon Swartz <alon@turnkeylinux.org>  Tue, 06 Aug 2013 15:37:33 +0300
+    - Latest Debian Wheezy package version of MediaWiki.
+    - Removed fckeditor extension, no longer available in Debian [#73].
+
+  * PHPMyAdmin:
+
+    - Configured to allow users preferences stored in database.
+    - Specified blowfish_secret and regeneration on firstboot (security).
+
+  * Note: Please refer to turnkey-core's changelog for changes common to all
+    appliances. Here we only describe changes specific to this appliance.
+
+ -- Alon Swartz <alon@turnkeylinux.org>  Thu, 10 Oct 2013 18:25:27 +0300
 
 turnkey-mediawiki-12.1 (1) turnkey; urgency=low
 
