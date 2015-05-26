@@ -62,8 +62,8 @@ for information on using the wiki software.<br><br>
 # apache configuration
 rm -f /etc/apache2/conf.d/mediawiki.conf
 touch /etc/apache2/conf.d/mediawiki.conf
-ln -s $WIKI_ETC/apache.conf /etc/apache2/sites-available/mediawiki
-a2dissite default
+ln -s $WIKI_ETC/apache.conf /etc/apache2/sites-available/mediawiki.conf
+a2dissite 000-default
 a2ensite mediawiki
 
 # stop mysql server
