@@ -60,8 +60,8 @@ for information on using the wiki software.<br><br>
 " | php $WIKI_SHARE/maintenance/edit.php -u $ADMIN_NAME --no-rc -b Main_Page
 
 # apache configuration
-rm -f /etc/apache2/conf.d/mediawiki.conf
-touch /etc/apache2/conf.d/mediawiki.conf
+rm -f /etc/apache2/conf-available/mediawiki.conf
+touch /etc/apache2/conf-available/mediawiki.conf
 ln -s $WIKI_ETC/apache.conf /etc/apache2/sites-available/mediawiki.conf
 a2dissite 000-default
 a2ensite mediawiki
