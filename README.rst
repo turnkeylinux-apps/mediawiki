@@ -26,13 +26,12 @@ and on top of that:
 
         - mediawiki-extensions-base
         - mediawiki-extensions-collection
-        - mediawiki-extensions-confirmedit
         - mediawiki-extensions-geshi
         - mediawiki-extensions-openid
 
 - SSL support out of the box.
-- `PHPMyAdmin`_ administration frontend for MySQL (listening on port
-  12322 - uses SSL).
+- `Adminer`_ administration frontend for MySQL (listening on port
+   12322 - uses SSL).
 - Postfix MTA (bound to localhost) to allow sending of email (e.g.,
   password recovery, user registration)
 - Webmin modules for configuring Apache2, PHP and MySQL.
@@ -69,5 +68,5 @@ Credentials *(passwords set at first boot)*
 .. _SyntaxHighlight\_GeSHi: http://www.mediawiki.org/wiki/Extension:SyntaxHighlight_GeSHi
 .. _Cite: http://www.mediawiki.org/wiki/Extension:Cite
 .. _AWC's Forum: http://www.mediawiki.org/wiki/Extension:AWC's_Forum
-.. _PHPMyAdmin: http://www.phpmyadmin.net/
+.. _Adminer: http://www.adminer.org/
 .. _MediaWiki docs: /docs/mediawiki
