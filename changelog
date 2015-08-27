@@ -22,6 +22,10 @@ turnkey-mediawiki-14.0 (1) turnkey; urgency=low
     - Configured to allow users preferences stored in database.
     - Specified blowfish_secret and regeneration on firstboot (security).
 
+  * Replaced PHPMyAdmin with Adminer
+
+  * Hardened default SSL settings
+
   * Note: Please refer to turnkey-core's changelog for changes common to all
     appliances. Here we only describe changes specific to this appliance.
 
