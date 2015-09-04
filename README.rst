@@ -52,7 +52,7 @@ See the `MediaWiki docs`_ for further details.
 Credentials *(passwords set at first boot)*
 -------------------------------------------
 
--  Webmin, SSH, MySQL, and phpMyAdmin: username **root**
+-  Webmin, SSH, MySQL, and Adminer: username **root**
 -  MediaWiki: username **admin**
 
 .. _MediaWiki: http://www.mediawiki.org/wiki/MediaWiki
