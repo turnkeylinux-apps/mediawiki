@@ -56,7 +56,7 @@ Credentials *(passwords set at first boot)*
 -  MediaWiki: username **admin**
 
 .. _MediaWiki: http://www.mediawiki.org/wiki/MediaWiki
-.. _TurnKey Core: http://www.turnkeylinux.org/core
+.. _TurnKey Core: https://www.turnkeylinux.org/core
 .. _ParserFunctions: http://www.mediawiki.org/wiki/Extension:ParserFunctions
 .. _StringFunctions: http://www.mediawiki.org/wiki/Extension:StringFunctions
 .. _CategoryTree: http://www.mediawiki.org/wiki/Extension:CategoryTree
