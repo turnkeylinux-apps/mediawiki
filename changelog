@@ -1,3 +1,12 @@
+turnkey-mediawiki-14.2 (1) turnkey; urgency=low
+
+  * MediaWiki v1.28 now installed from upstream instead of Debian package.
+
+  * Note: Please refer to turnkey-core's changelog for changes common to all
+    appliances. Here we only describe changes specific to this appliance.
+
+ -- Anton Pyrogovskyi <anton@turnkeylinux.org>  Mon, 30 Jan 2017 05:48:43 +0000
+
 turnkey-mediawiki-14.1 (1) turnkey; urgency=low
 
   * Installed security updates.
