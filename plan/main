@@ -1,12 +1,6 @@
 #include <turnkey/base>
 #include <turnkey/lamp>
 
-mediawiki
-mediawiki-extensions-base
-mediawiki-extensions-collection
-mediawiki-extensions-geshi
-mediawiki-extensions-openid
-
 php5-cli            /* used by conf.d and useful for debugging and maintenance */
 php5-gd             /* mediawiki images support */
 tidy                /* needed by $wgUseTidy */
