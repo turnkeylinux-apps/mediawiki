@@ -53,6 +53,8 @@ $CURL "${URL}?page=Install"
 $CURL "${URL}?page=Install" --data "submit-continue=Continue+%E2%86%92"
 $CURL "${URL}?localsettings=1" > "${WEBROOT}/LocalSettings.php"
 
+sed -i '/wgServer/d' "${WEBROOT}/LocalSettings.php"
+
 # create welcome page
 echo "Welcome to MediaWiki.<br>
 Consult the [http://meta.wikimedia.org/wiki/Help:Contents User's Guide]
