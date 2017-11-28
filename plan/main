@@ -1,7 +1,10 @@
 #include <turnkey/base>
 #include <turnkey/lamp>
 
-php5-cli            /* used by conf.d and useful for debugging and maintenance */
-php5-gd             /* mediawiki images support */
+php-cli            /* used by conf.d and useful for debugging and maintenance */
+php-gd             /* mediawiki images support */
 tidy                /* needed by $wgUseTidy */
-
+php-xml
+php-mbstring
+php-mcrypt
+php-intl
