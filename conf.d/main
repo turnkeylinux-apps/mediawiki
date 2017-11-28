@@ -15,10 +15,6 @@ rm -rf $SRC/mediawiki-*.tar.gz
 mv $SRC/mediawiki-* $WEBROOT
 chown -R www-data:www-data $WEBROOT
 
-# convenience execution variables
-MYSQL_BATCH="mysql --user=root --password=$MYSQL_PASS --batch"
-MYSQL_ADMIN="mysqladmin --user=root --password=$MYSQL_PASS"
-
 # start services
 service mysql start
 service apache2 start
