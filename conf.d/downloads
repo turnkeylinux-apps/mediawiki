@@ -6,7 +6,9 @@ dl() {
 }
 
 VERSION="1.28"
-URL="https://releases.wikimedia.org/mediawiki/${VERSION}/mediawiki-${VERSION}.0.tar.gz"
+MINOR="2"
+
+URL="https://releases.wikimedia.org/mediawiki/${VERSION}/mediawiki-${VERSION}.${MINOR}.tar.gz"
 
 dl $URL /usr/local/src
 

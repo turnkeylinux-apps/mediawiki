@@ -1,3 +1,16 @@
+turnkey-mediawiki-15.0 (1) turnkey; urgency=low
+
+  * Upgraded to the latest upstream source version
+
+  * Install Adminer directly from stretch/main repo
+
+  * Replace MySQL with MariaDB
+
+  * Note: Please refer to turnkey-core's changelog for changes common to all
+    appliances. Here we only describe changes specdific to this appliance.
+
+ -- Vlad Kuzmenko <vlad.work.here@gmail.com>  Tue, 28 Nov 2017 13:27:42 +0200
+
 turnkey-mediawiki-14.2 (1) turnkey; urgency=low
 
   * MediaWiki v1.28 now installed from upstream instead of Debian package.

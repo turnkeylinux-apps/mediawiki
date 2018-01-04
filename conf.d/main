@@ -15,17 +15,8 @@ rm -rf $SRC/mediawiki-*.tar.gz
 mv $SRC/mediawiki-* $WEBROOT
 chown -R www-data:www-data $WEBROOT
 
-# convenience execution variables
-MYSQL_BATCH="mysql --user=root --password=$MYSQL_PASS --batch"
-MYSQL_ADMIN="mysqladmin --user=root --password=$MYSQL_PASS"
-
-# start mysql server and create database
+# start services
 service mysql start
-$MYSQL_ADMIN create $DB_NAME
-
-# create database user with privileges on the database
-$MYSQL_BATCH --execute "grant all privileges on $DB_NAME.* to $DB_USER@localhost identified by '$DB_PASS'; flush privileges;"
-
 service apache2 start
 
 a2dissite 000-default
@@ -33,27 +24,7 @@ a2ensite mediawiki
 
 service apache2 reload
 
-URL="http://127.0.0.1/mw-config/index.php"
-CURL="curl -c /tmp/cookie -b /tmp/cookie"
-
-$CURL "${URL}"
-$CURL "${URL}?page=Language"
-$CURL "${URL}?page=Language" --data "uselang=en&ContLang=en&submit-continue=Continue+%E2%86%92"
-$CURL "${URL}?page=Welcome"
-$CURL "${URL}?page=Welcome" --data "submit-continue=Continue+%E2%86%92"
-$CURL "${URL}?page=Welcome" --data "submit-continue=Continue+%E2%86%92"
-$CURL "${URL}?page=DBConnect"
-$CURL "${URL}?page=DBConnect" --data "DBType=mysql&mysql_wgDBserver=localhost&mysql_wgDBname=${DB_NAME}&mysql_wgDBprefix=&mysql__InstallUser=${DB_USER}&mysql__InstallPassword=${DB_PASS}&submit-continue=Continue+%E2%86%92"
-$CURL "${URL}?page=DBSettings"
-$CURL "${URL}?page=DBSettings" --data "mysql__SameAccount=1&mysql_wgDBuser=wikiuser&mysql_wgDBpassword=&mysql__MysqlEngine=InnoDB&mysql__MysqlCharset=utf8&submit-continue=Continue+%E2%86%92"
-$CURL "${URL}?page=Name"
-$CURL "${URL}?page=Name" --data "config_wgSitename=TurnKey+MediaWiki&config__NamespaceType=site-name&config_wgMetaNamespace=MyWiki&config__AdminName=${ADMIN_NAME}&config__AdminPassword=${ADMIN_PASS}&config__AdminPasswordConfirm=${ADMIN_PASS}&config__AdminEmail=admin%40example.com&config__SkipOptional=skip&submit-continue=Continue+%E2%86%92"
-$CURL "${URL}?page=Options"
-$CURL "${URL}?page=Install"
-$CURL "${URL}?page=Install" --data "submit-continue=Continue+%E2%86%92"
-$CURL "${URL}?localsettings=1" > "${WEBROOT}/LocalSettings.php"
-
-sed -i '/wgServer/d' "${WEBROOT}/LocalSettings.php"
+php $WEBROOT/maintenance/install.php --dbname=$DB_NAME --dbserver="localhost" --installdbuser=root --installdbpass=$MYSQL_PASS --dbuser=$DB_USER --dbpass=$DB_PASS --scriptpath="" --server="" --lang=en --pass=$ADMIN_PASS "TurnKey+MediaWiki" "$ADMIN_NAME"
 
 # create welcome page
 echo "Welcome to MediaWiki.<br>
@@ -67,6 +38,6 @@ for information on using the wiki software.<br><br>
 * [http://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki release mailing list]
 " | php $WEBROOT/maintenance/edit.php -u $ADMIN_NAME --no-rc -b Main_Page
 
-# stop mysql server
+# stop services
 service mysql stop
 service apache2 stop
