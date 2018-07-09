@@ -9,7 +9,7 @@ turnkey-mediawiki-15.0 (1) turnkey; urgency=low
   * Note: Please refer to turnkey-core's changelog for changes common to all
     appliances. Here we only describe changes specdific to this appliance.
 
- -- Vlad Kuzmenko <vlad.work.here@gmail.com>  Tue, 28 Nov 2017 13:27:42 +0200
+ -- Stefan Davis <stefan@turnkeylinux.org>  Mon, 09 Jul 2018 10:22:38 +1000
 
 turnkey-mediawiki-14.2 (1) turnkey; urgency=low
 
