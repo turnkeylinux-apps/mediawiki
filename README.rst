@@ -12,22 +12,16 @@ and on top of that:
 
 - MediaWiki configurations:
    
-   - Installed from package management. See /var/www for links to file
-     paths.
+   - Installed from upstream source code to /var/www/mediawiki
    - Ensure clean and compliant HTML ($wgUseTidy)
    - Out of the box file uploading and image resizing (GD library)
       
       - Maximum filesize: 2MB
       - Supported file types: png, gif, jpg, jpeg
 
-   - MediaWiki extensions are installed via selected Debian packages.
-     Includes a custom script ``mwlsext`` to display enabled/available
-     extensions:
-
-        - mediawiki-extensions-base
-        - mediawiki-extensions-collection
-        - mediawiki-extensions-geshi
-        - mediawiki-extensions-openid
+     **Security note**: Updates to MediaWiki may require supervision so
+     they **ARE NOT** configured to install automatically. See `MediaWiki
+     documentation`_ for upgrading.
 
 - SSL support out of the box.
 - `Adminer`_ administration frontend for MySQL (listening on port
@@ -38,16 +32,15 @@ and on top of that:
 
 Customization details:
 
-- Site logo is located at */var/lib/mediawiki/images/logo.png*
+- Site logo is located at */var/www/mediawiki/images/logo.png*
   (recommended size: 135x135px).
 - Site name and administrative emails (set in
-  */etc/mediawiki/LocalSettings.php*)::
+  */var/www/mediawiki/LocalSettings.php*)::
 
     $wgSitename = "";
     $wgEmergencyContact = webmaster@localhost;
     $wgPasswordSender = webmaster@localhost;
 
-See the `MediaWiki docs`_ for further details.
 
 Credentials *(passwords set at first boot)*
 -------------------------------------------
@@ -56,18 +49,7 @@ Credentials *(passwords set at first boot)*
 -  Adminer: username **adminer**
 -  MediaWiki: username **admin**
 
-.. _MediaWiki: http://www.mediawiki.org/wiki/MediaWiki
+.. _MediaWiki: https://www.mediawiki.org/wiki/MediaWiki
 .. _TurnKey Core: https://www.turnkeylinux.org/core
-.. _ParserFunctions: http://www.mediawiki.org/wiki/Extension:ParserFunctions
-.. _StringFunctions: http://www.mediawiki.org/wiki/Extension:StringFunctions
-.. _CategoryTree: http://www.mediawiki.org/wiki/Extension:CategoryTree
-.. _Renameuser: http://www.mediawiki.org/wiki/Extension:Renameuser
-.. _Preloader: http://www.mediawiki.org/wiki/Extension:Preloader
-.. _CharInsert: http://www.mediawiki.org/wiki/Extension:CharInsert
-.. _ConfirmEdit: http://www.mediawiki.org/wiki/Extension:ConfirmEdit
-.. _Gadgets: http://www.mediawiki.org/wiki/Extension:Gadgets
-.. _SyntaxHighlight\_GeSHi: http://www.mediawiki.org/wiki/Extension:SyntaxHighlight_GeSHi
-.. _Cite: http://www.mediawiki.org/wiki/Extension:Cite
-.. _AWC's Forum: http://www.mediawiki.org/wiki/Extension:AWC's_Forum
-.. _Adminer: http://www.adminer.org/
-.. _MediaWiki docs: /docs/mediawiki
+.. _MediaWiki documentation: https://www.mediawiki.org/wiki/Manual:Upgrading
+.. _Adminer: https://www.adminer.org/
