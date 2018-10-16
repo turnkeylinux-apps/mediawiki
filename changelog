@@ -1,3 +1,9 @@
+turnkey-mediawiki-15.1 (1) turnkey; urgency=low
+
+  * Fixed redirection bug / added domain setting
+
+ -- Stefan Davis <stefan@turnkeylinux.org>  Tue, 16 Oct 2018 03:16:50 +1000
+
 turnkey-mediawiki-15.0 (1) turnkey; urgency=low
 
   * Upgraded to the latest upstream source version (1.31.0)
