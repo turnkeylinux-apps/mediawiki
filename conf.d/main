@@ -21,6 +21,7 @@ service apache2 start
 
 a2dissite 000-default
 a2ensite mediawiki
+a2enmod rewrite
 
 service apache2 reload
 

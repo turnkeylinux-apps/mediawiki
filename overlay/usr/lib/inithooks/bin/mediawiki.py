@@ -11,6 +11,7 @@ import sys
 import getopt
 import hashlib
 import inithooks_cache
+import subprocess
 
 from dialog_wrapper import Dialog
 from mysqlconf import MySQL
@@ -88,6 +89,11 @@ def main():
                 lines.append(line)
     with open('/var/www/mediawiki/LocalSettings.php', 'w') as fob:
         fob.writelines(lines)
+
+    subprocess.run(['sed',
+            '\|RewriteRule|s|https://.*|https://%s/\$1 [R,L]|' % domain,
+            '/etc/apache2/sites-available/mediawiki.conf'])
+    
 
 if __name__ == "__main__":
     main()
