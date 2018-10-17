@@ -70,8 +70,9 @@ def main():
     if domain == "DEFAULT":
         domain = DEFAULT_DOMAIN
 
-    if not domain.startswith('http://') or not domain.startswith('https://'):
-	domain = 'https://' + domain
+    fqdn = re.compile(r"https?://")
+    fqdn = fqdn.sub('', domain).strip('/')
+    domain = "https://%s/" % fqdn
 
     inithooks_cache.write("APP_DOMAIN", domain)
 
@@ -91,10 +92,10 @@ def main():
     with open('/var/www/mediawiki/LocalSettings.php', 'w') as fob:
         fob.writelines(lines)
 
-    subprocess.run(['sed',
-            '\|RewriteRule|s|https://.*|https://%s/\$1 [R,L]|' % domain,
+    subprocess.call(['sed', '-i',
+            '\|RewriteRule|s|https://.*|https://%s/\$1 [R,L]|' % fqdn,
             '/etc/apache2/sites-available/mediawiki.conf'])
-    
+    subprocess.call(['service', 'apache2', 'restart'])
 
 if __name__ == "__main__":
     main()
