@@ -82,16 +82,9 @@ def main():
     m = MySQL()
     m.execute('UPDATE mediawiki.user SET user_password=\"%s\" WHERE user_id=\"1\";' % hashpass)
 
-    lines = []
-    with open('/var/www/mediawiki/LocalSettings.php', 'r') as fob:
-        for line in fob:
-            if re.match(r'^\$wgServer\s*=\s*"[^"]*";$', line):
-                lines.append('$wgServer = "{}";'.format(domain))
-            else:
-                lines.append(line)
-    with open('/var/www/mediawiki/LocalSettings.php', 'w') as fob:
-        fob.writelines(lines)
-
+    subprocess.call(['sed', '-i',
+            '\|^\$wgServer|s|=.*|= "https://%s";|' % fqdn,
+            '/var/www/mediawiki/LocalSettings.php'])
     subprocess.call(['sed', '-i',
             '\|RewriteRule|s|https://.*|https://%s/\$1 [R,L]|' % fqdn,
             '/etc/apache2/sites-available/mediawiki.conf'])
