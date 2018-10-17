@@ -1,6 +1,11 @@
 turnkey-mediawiki-15.1 (1) turnkey; urgency=low
 
-  * Fixed redirection bug / added domain setting
+  * Upgraded to the latest upstream stable LTS version (v1.31.1).
+
+  * Fixed redirection bug / added domain setting - closes #1202.
+
+  * Redirect http => https & redirect to domain configured at firstboot -
+    part of #958.
 
  -- Stefan Davis <stefan@turnkeylinux.org>  Tue, 16 Oct 2018 03:16:50 +1000
 
