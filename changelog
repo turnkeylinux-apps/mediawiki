@@ -2,7 +2,7 @@ turnkey-mediawiki-15.1 (1) turnkey; urgency=low
 
   * Upgraded to the latest upstream stable LTS version (v1.31.1).
 
-  * Fixed redirection bug / added domain setting - closes #1202.
+  * Fixed redirection bug / added domain setting to inithook - closes #1202.
 
   * Redirect http => https & redirect to domain configured at firstboot -
     part of #958.

@@ -3,7 +3,8 @@
 
 Option:
     --pass=     unless provided, will ask interactively
-
+    --domain=   unless provided, will ask interactively
+                DEFAULT=www.example.com
 """
 
 import re
