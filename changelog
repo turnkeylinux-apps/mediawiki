@@ -1,3 +1,10 @@
+turnkey-mediawiki-15.2 (1) turnkey; urgency=low
+
+  * Rebuild to resolve inadvertent removal of mariadb during sec-updates
+    - part of #1246.
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Thu, 22 Nov 2018 11:39:10 +1100
+
 turnkey-mediawiki-15.1 (1) turnkey; urgency=low
 
   * Upgraded to the latest upstream stable LTS version (v1.31.1).
