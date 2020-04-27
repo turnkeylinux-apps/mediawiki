@@ -6,7 +6,7 @@ dl() {
 }
 
 VERSION="1.31"
-MINOR="1"
+MINOR="7"
 
 URL="https://releases.wikimedia.org/mediawiki/${VERSION}/mediawiki-${VERSION}.${MINOR}.tar.gz"
 

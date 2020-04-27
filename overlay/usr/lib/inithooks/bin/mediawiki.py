@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """Set MediaWiki admin password
 
 Option:
@@ -19,9 +19,9 @@ from mysqlconf import MySQL
 
 def usage(s=None):
     if s:
-        print >> sys.stderr, "Error:", s
-    print >> sys.stderr, "Syntax: %s [options]" % sys.argv[0]
-    print >> sys.stderr, __doc__
+        print("Error:", s, file=sys.stderr)
+    print("Syntax: %s [options]" % sys.argv[0], file=sys.stderr)
+    print(__doc__, file=sys.stderr)
     sys.exit(1)
 
 DEFAULT_DOMAIN="www.example.com"
@@ -29,7 +29,7 @@ DEFAULT_DOMAIN="www.example.com"
 def main():
     try:
         opts, args = getopt.gnu_getopt(sys.argv[1:], "h", ['help', 'pass=', 'domain='])
-    except getopt.GetoptError, e:
+    except getopt.GetoptError as e:
         usage(e)
 
     password = ""
@@ -76,11 +76,11 @@ def main():
 
     inithooks_cache.write("APP_DOMAIN", domain)
 
-    hashpass = hashlib.md5(password).hexdigest()
-    hashpass = hashlib.md5("1-" + hashpass).hexdigest()     # userid 1
+    hashpass = hashlib.md5((password).encode('utf8')).hexdigest()
+    hashpass = hashlib.md5(b"1-" + hashpass.encode('utf8')).hexdigest()     # userid 1
 
     m = MySQL()
-    m.execute('UPDATE mediawiki.user SET user_password=\"%s\" WHERE user_id=\"1\";' % hashpass)
+    m.execute('UPDATE mediawiki.user SET user_password=%s WHERE user_id=\"1\";', (hashpass,))
 
     subprocess.call(['sed', '-i',
             '\|^\$wgServer|s|=.*|= "https://%s";|' % fqdn,
