@@ -6,5 +6,4 @@ php-gd             /* mediawiki images support */
 tidy                /* needed by $wgUseTidy */
 php-xml
 php-mbstring
-php-mcrypt
 php-intl
