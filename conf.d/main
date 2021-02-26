@@ -52,7 +52,7 @@ for information on using the wiki software.<br><br>
 # update logo to tkl one
 mv /usr/local/src/logo.png $WEBROOT/resources/assets/
 chown www-data:www-data $WEBROOT/resources/assets/logo.png
-sed -i "\|^$wgLogos|s|wiki.png|logo.png|" $WEBROOT/LocalSettings.php
+sed -i "\|^$wgLogos| s|wiki.png|logo.png|" $WEBROOT/LocalSettings.php
 
 # stop services
 service mysql stop
