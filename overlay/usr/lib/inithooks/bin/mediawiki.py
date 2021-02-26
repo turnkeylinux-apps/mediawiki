@@ -39,24 +39,16 @@ def main():
             usage()
         elif opt == '--pass':
             password = val
-            if password.lower() == "admin":
-                usage("illegal password specified")
         elif opt == '--domain':
             domain = val
 
     if not password:
         if 'd' not in locals():
             d = Dialog('TurnKey Linux - First boot configuration')
-        while True:
-            password = d.get_password(
-                "MediaWiki Password",
-                "Enter new password for the MediaWiki 'admin' account.")
-
-            if password.lower() == "admin":
-                d.error("Illegal password, please try again.")
-                continue
-
-            break
+        password = d.get_password(
+            "MediaWiki Password",
+            "Enter new password for the MediaWiki 'admin' account.",
+            pass_req=10, min_complexity=3)
 
     if not domain:
         if 'd' not in locals():
@@ -92,4 +84,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
