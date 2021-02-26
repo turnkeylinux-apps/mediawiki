@@ -25,7 +25,17 @@ a2enmod rewrite
 
 service apache2 reload
 
-php $WEBROOT/maintenance/install.php --dbname=$DB_NAME --dbserver="localhost" --installdbuser=root --installdbpass=$MYSQL_PASS --dbuser=$DB_USER --dbpass=$DB_PASS --scriptpath="" --server="" --lang=en --pass=$ADMIN_PASS "TurnKey+MediaWiki" "$ADMIN_NAME"
+php $WEBROOT/maintenance/install.php "TurnKey+MediaWiki" "$ADMIN_NAME" \
+    --dbname=$DB_NAME \
+    --dbserver="localhost" \
+    --installdbuser=root \
+    --installdbpass=$MYSQL_PASS \
+    --dbuser=$DB_USER \
+    --dbpass=$DB_PASS \
+    --scriptpath="" \
+    --server="" \
+    --lang=en \
+    --pass=$ADMIN_PASS
 
 # create welcome page
 echo "Welcome to MediaWiki.<br>
