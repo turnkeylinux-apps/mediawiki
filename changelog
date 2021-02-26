@@ -1,3 +1,20 @@
+turnkey-mediawiki-16.1 (1) turnkey; urgency=low
+
+  * Update to latest upstream stable LTS version - v1.35.1.
+
+  * Tidy up old Apache config (was working but included old deprecated
+    directives).
+
+  * Update inithook and conf script to set appropriate password (now requires
+    10 chars).
+
+  * Remove redundant extension config script (/usr/local/bin/mwlsext).
+
+  * Note: Please refer to turnkey-core's 16.1 changelog for changes common to
+    all appliances. Here we only describe changes specific to this appliance.
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Fri, 26 Feb 2021 17:46:02 +1100
+
 turnkey-mediawiki-16.0 (1) turnkey; urgency=low
 
   * Upgraded to latest upstream stable LTS version - v1.31.7.

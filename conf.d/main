@@ -5,7 +5,7 @@ DB_USER=mediawiki
 DB_PASS=$(mcookie)
 
 ADMIN_NAME=admin
-ADMIN_PASS=turnkey1
+ADMIN_PASS=turnkey123
 
 SRC=/usr/local/src
 WEBROOT=/var/www/mediawiki
@@ -25,7 +25,17 @@ a2enmod rewrite
 
 service apache2 reload
 
-php $WEBROOT/maintenance/install.php --dbname=$DB_NAME --dbserver="localhost" --installdbuser=root --installdbpass=$MYSQL_PASS --dbuser=$DB_USER --dbpass=$DB_PASS --scriptpath="" --server="" --lang=en --pass=$ADMIN_PASS "TurnKey+MediaWiki" "$ADMIN_NAME"
+php $WEBROOT/maintenance/install.php "TurnKey+MediaWiki" "$ADMIN_NAME" \
+    --dbname=$DB_NAME \
+    --dbserver="localhost" \
+    --installdbuser=root \
+    --installdbpass=$MYSQL_PASS \
+    --dbuser=$DB_USER \
+    --dbpass=$DB_PASS \
+    --scriptpath="" \
+    --server="" \
+    --lang=en \
+    --pass=$ADMIN_PASS
 
 # create welcome page
 echo "Welcome to MediaWiki.<br>
@@ -38,6 +48,11 @@ for information on using the wiki software.<br><br>
 * [http://www.mediawiki.org/wiki/Manual:FAQ MediaWiki FAQ]
 * [http://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki release mailing list]
 " | php $WEBROOT/maintenance/edit.php -u $ADMIN_NAME --no-rc -b Main_Page
+
+# update logo to tkl one
+mv /usr/local/src/logo.png $WEBROOT/resources/assets/
+chown www-data:www-data $WEBROOT/resources/assets/logo.png
+sed -i "\|^$wgLogos| s|wiki.png|logo.png|" $WEBROOT/LocalSettings.php
 
 # stop services
 service mysql stop
