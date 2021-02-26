@@ -5,8 +5,9 @@ dl() {
     cd $2; curl -L -f -O $PROXY $1; cd -
 }
 
-VERSION="1.35.1"
+VERSION="1.35"
+MINOR="1"
 
-URL="https://releases.wikimedia.org/mediawiki/${VERSION}/mediawiki-${VERSION}.tar.gz"
+URL="https://releases.wikimedia.org/mediawiki/${VERSION}/mediawiki-${VERSION}.${MINOR}.tar.gz"
 
 dl $URL /usr/local/src
