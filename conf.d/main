@@ -15,13 +15,15 @@ rm -rf $SRC/mediawiki-*.tar.gz
 mv $SRC/mediawiki-* $WEBROOT
 chown -R www-data:www-data $WEBROOT
 
+a2enmod headers
+
 # start services
 service mysql start
 service apache2 start
-
 a2dissite 000-default
 a2ensite mediawiki
 a2enmod rewrite
+
 
 service apache2 reload
 
