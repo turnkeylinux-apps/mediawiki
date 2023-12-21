@@ -5,9 +5,12 @@ dl() {
     cd $2; curl -L -f -O $PROXY $1; cd -
 }
 
-VERSION="1.37"
-MINOR="1"
+#VERSION="1.40"
+#MINOR="0"
+#URL="https://releases.wikimedia.org/mediawiki/${VERSION}/mediawiki-${VERSION}.${MINOR}.tar.gz"
 
-URL="https://releases.wikimedia.org/mediawiki/${VERSION}/mediawiki-${VERSION}.${MINOR}.tar.gz"
+# determine DL url dynamically from downloads page
+URL=$(curl https://www.mediawiki.org/wiki/Download 2>/dev/null | \
+      sed -En "\|Download .tar.gz instead|s|.*<a href=\"([a-z0-9:/\.-]+.tar.gz)\".*|\1|p")
 
 dl $URL /usr/local/src
