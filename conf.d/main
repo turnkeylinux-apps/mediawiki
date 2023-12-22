@@ -49,10 +49,11 @@ for information on using the wiki software.<br><br>
 * [http://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki release mailing list]
 " | php $WEBROOT/maintenance/edit.php -u $ADMIN_NAME --no-rc -b Main_Page
 
-# update logo to tkl one
-mv /usr/local/src/logo.png $WEBROOT/resources/assets/
-chown www-data:www-data $WEBROOT/resources/assets/logo.png
-sed -i "\|^$wgLogos| s|wiki.png|logo.png|" $WEBROOT/LocalSettings.php
+# update default logos to tkl ones
+mv /usr/local/src/*.png $WEBROOT/resources/assets/
+chown www-data:www-data $WEBROOT/resources/assets/*.png
+sed -i "\|'1x' =>| s|change-your-logo.svg|change-your-logo-tkl.png|" $WEBROOT/LocalSettings.php
+sed -i "\|'icon' =>| s|change-your-logo-icon.svg|change-your-logo-icon-tkl.png|" $WEBROOT/LocalSettings.php
 
 # stop services
 service mysql stop
