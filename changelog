@@ -2,6 +2,11 @@ turnkey-mediawiki-18.0 (1) turnkey; urgency=low
 
   * Install latest upstream version of MediaWiki: 1.40.1.
 
+  * Update TKL Mediawiki logos (MediaWiki updated their logo in 2020; plus the
+    paths have changed).
+
+  * Enable VisualEditor by default in TKL Mediawiki.
+
   * Special thanks to UncleDan (Daniele Lolli - https://github.com/UncleDan)
     for starting work on this (and many other appliances).
 
