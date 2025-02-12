@@ -75,10 +75,10 @@ def main():
     m.execute('UPDATE mediawiki.user SET user_password=%s WHERE user_id=\"1\";', (hashpass,))
 
     subprocess.call(['sed', '-i',
-            '\|^\$wgServer|s|=.*|= "https://%s";|' % fqdn,
+            '\|^\$wgServer|s|=.*|= "%s";|' % domain,
             '/var/www/mediawiki/LocalSettings.php'])
     subprocess.call(['sed', '-i',
-            '\|RewriteRule|s|https://.*|https://%s/\$1 [R,L]|' % fqdn,
+            '\|RewriteRule|s|https://.*|%s/\$1 [R,L]|' % domain,
             '/etc/apache2/sites-available/mediawiki.conf'])
     subprocess.call(['service', 'apache2', 'restart'])
 
