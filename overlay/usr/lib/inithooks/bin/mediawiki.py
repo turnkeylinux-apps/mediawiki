@@ -10,12 +10,11 @@ Option:
 import re
 import sys
 import getopt
-import hashlib
 from libinithooks import inithooks_cache
 import subprocess
 
 from libinithooks.dialog_wrapper import Dialog
-from mysqlconf import MySQL
+
 
 def usage(s=None):
     if s:
@@ -24,7 +23,33 @@ def usage(s=None):
     print(__doc__, file=sys.stderr)
     sys.exit(1)
 
+
 DEFAULT_DOMAIN="www.example.com"
+
+
+def reset_password(password: str) -> str:
+    """Set mediawiki password.
+
+    Returns either "success" or process stderr.
+    """
+    change_password = subprocess.run(
+        [
+            "php",
+            "maintenance/run.php",
+            "changePassword",
+            "--user=Admin",
+            f"--password={password}"],
+        capture_output=True,
+        text=True,
+        cwd="/var/www/mediawiki",
+    )
+    if (
+        change_password.returncode == 0
+        and change_password.stdout.startswith("Password set for Admin")
+    ):
+        return "success"
+    return change_password.stderr
+
 
 def main():
     try:
@@ -43,12 +68,26 @@ def main():
             domain = val
 
     if not password:
-        if 'd' not in locals():
-            d = Dialog('TurnKey Linux - First boot configuration')
-        password = d.get_password(
-            "MediaWiki Password",
-            "Enter new password for the MediaWiki 'admin' account.",
-            pass_req=10, min_complexity=3)
+        tries = 1
+        while tries < 4:
+            if 'd' not in locals():
+                d = Dialog('TurnKey Linux - First boot configuration')
+            password = d.get_password(
+                "MediaWiki Password",
+                "Enter new password for the MediaWiki 'admin' account.",
+                pass_req=10, min_complexity=3)
+            try_password = reset_password(password)
+            if try_password == "success":
+                break
+            elif tries == 3:
+                d.error(
+                    "Repeated errors setting password. Giving up. Please"
+                    " report to TurnKey.",
+                )
+                break
+            d.error(
+                f"Error setting password:\n{try_password}\nPlease try again",
+            )
 
     if not domain:
         if 'd' not in locals():
@@ -68,12 +107,6 @@ def main():
 
     inithooks_cache.write("APP_DOMAIN", domain)
 
-    hashpass = hashlib.md5((password).encode('utf8')).hexdigest()
-    hashpass = hashlib.md5(b"1-" + hashpass.encode('utf8')).hexdigest()     # userid 1
-
-    m = MySQL()
-    m.execute('UPDATE mediawiki.user SET user_password=%s WHERE user_id=\"1\";', (hashpass,))
-
     subprocess.call(['sed', '-i',
             '\|^\$wgServer|s|=.*|= "%s";|' % domain,
             '/var/www/mediawiki/LocalSettings.php'])
@@ -81,6 +114,7 @@ def main():
             '\|RewriteRule|s|https://.*|%s/\$1 [R,L]|' % domain,
             '/etc/apache2/sites-available/mediawiki.conf'])
     subprocess.call(['service', 'apache2', 'restart'])
+
 
 if __name__ == "__main__":
     main()
