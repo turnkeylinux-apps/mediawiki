@@ -88,6 +88,9 @@ def main():
             d.error(
                 f"Error setting password:\n{try_password}\nPlease try again",
             )
+    else:
+        # should log the output of this in case it fails
+        try_password = reset_password(password)
 
     if not domain:
         if 'd' not in locals():
