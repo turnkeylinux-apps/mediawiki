@@ -2,6 +2,8 @@ turnkey-mediawiki-19.0 (1) turnkey; urgency=low
 
   * Install latest upstream version of MediaWiki: 1.46.0.
 
+  * Firstboot 'admin' password now set via PHP (was MySQL).
+
   * Upgraded base distribution to Debian 13.x/Trixie.
 
   * Replace TurnKey custom Debian-Installer based 'di-live' with new custom
