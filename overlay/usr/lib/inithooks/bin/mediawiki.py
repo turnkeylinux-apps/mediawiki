@@ -113,7 +113,7 @@ def main():
     subprocess.call(['sed', '-i',
             '\|RewriteRule|s|https://.*|%s/\$1 [R,L]|' % domain,
             '/etc/apache2/sites-available/mediawiki.conf'])
-    subprocess.call(['service', 'apache2', 'restart'])
+    subprocess.call(["systemctl", "restart", "apache2"])
 
 
 if __name__ == "__main__":
