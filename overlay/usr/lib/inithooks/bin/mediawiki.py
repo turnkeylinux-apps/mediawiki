@@ -38,7 +38,8 @@ def reset_password(password: str) -> str:
             "maintenance/run.php",
             "changePassword",
             "--user=Admin",
-            f"--password={password}"],
+            "--passwordstdin"],
+        input=password,
         capture_output=True,
         text=True,
         cwd="/var/www/mediawiki",
@@ -48,7 +49,11 @@ def reset_password(password: str) -> str:
         and change_password.stdout.startswith("Password set for Admin")
     ):
         return "success"
-    return change_password.stderr
+    return (
+        change_password.stderr.strip()
+        or change_password.stdout.strip()
+        or f"changePassword exited {change_password.returncode}"
+    )
 
 
 def main():
@@ -68,8 +73,7 @@ def main():
             domain = val
 
     if not password:
-        tries = 1
-        while tries < 4:
+        for tries in range(1, 4):
             if 'd' not in locals():
                 d = Dialog('TurnKey Linux - First boot configuration')
             password = d.get_password(
@@ -84,13 +88,15 @@ def main():
                     "Repeated errors setting password. Giving up. Please"
                     " report to TurnKey.",
                 )
-                break
+                raise RuntimeError("Unable to set the MediaWiki password")
             d.error(
                 f"Error setting password:\n{try_password}\nPlease try again",
             )
     else:
-        # should log the output of this in case it fails
         try_password = reset_password(password)
+        if try_password != "success":
+            print(f"Unable to set the MediaWiki password: {try_password}", file=sys.stderr)
+            sys.exit(1)
 
     if not domain:
         if 'd' not in locals():
