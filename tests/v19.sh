@@ -8,15 +8,21 @@ base=https://localhost
 curl_args=(-kfsS)
 mkdir -p "$work"
 
+printf '%s\n' mediawiki_check=services
 systemctl --quiet is-active apache2.service mariadb.service
+printf '%s\n' mediawiki_check=inithook
 grep -q '\[40mediawiki\] successfully completed' /var/log/inithooks.log
+printf '%s\n' mediawiki_check=homepage-request
 curl "${curl_args[@]}" "$base/" >"$work/home.html"
+printf '%s\n' mediawiki_check=homepage-content
 grep -Eqi 'MediaWiki|Main Page' "$work/home.html"
 
+printf '%s\n' mediawiki_check=version
 version=$(sed -n "s/^define( 'MW_VERSION', '\([^']*\)' );/\1/p" \
     /var/www/mediawiki/includes/Defines.php)
 test "$version" = 1.46.0
 
+printf '%s\n' mediawiki_check=ownership
 runuser -u www-data -- test ! -w /var/www/mediawiki/index.php
 runuser -u www-data -- test ! -w /var/www/mediawiki/LocalSettings.php
 runuser -u www-data -- touch /var/www/mediawiki/images/.tkl-v19-write-test
