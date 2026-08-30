@@ -13,7 +13,7 @@ systemctl --quiet is-active apache2.service mariadb.service
 printf '%s\n' mediawiki_check=inithook
 grep -q '\[40mediawiki\] successfully completed' /var/log/inithooks.log
 printf '%s\n' mediawiki_check=homepage-request
-curl "${curl_args[@]}" "$base/" >"$work/home.html"
+curl "${curl_args[@]}" -L "$base/" >"$work/home.html"
 printf '%s\n' mediawiki_check=homepage-content
 grep -Eqi 'MediaWiki|Main Page' "$work/home.html"
 
