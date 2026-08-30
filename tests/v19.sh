@@ -4,8 +4,8 @@ set -euo pipefail
 result=${TKL_TEST_RESULT:?}
 password=${TKL_TEST_APP_PASS:?}
 work=/run/tkl-v19-tests/mediawiki
-base=https://www.example.com
-curl_args=(-kfsS --resolve www.example.com:443:127.0.0.1)
+base=https://localhost
+curl_args=(-kfsS)
 mkdir -p "$work"
 
 systemctl --quiet is-active apache2.service mariadb.service
