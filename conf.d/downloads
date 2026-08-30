@@ -2,15 +2,26 @@
 
 dl() {
     local proxy_args=()
+    local filename=${1##*/}
+    local partial="${filename}.part"
+    local attempt
     [ -n "${FAB_HTTP_PROXY:-}" ] && proxy_args=(--proxy "$FAB_HTTP_PROXY")
     cd "$2"
     # Wikimedia's CDN may cancel long-lived HTTP/2 transfers. Keep the
-    # integrity check below authoritative, but tolerate transient transport
-    # failures while fetching the release archive.
-    curl --proto '=https' --tlsv1.2 --http1.1 -L -f \
-        --retry 3 --retry-delay 2 --retry-all-errors \
-        -O "${proxy_args[@]}" "$1"
+    # integrity check below authoritative and resume bounded HTTP/1.1 attempts
+    # rather than discarding each partial release archive.
+    for attempt in $(seq 1 10); do
+        if curl --proto '=https' --tlsv1.2 --http1.1 -L -f \
+                --connect-timeout 30 --max-time 180 --continue-at - \
+                --output "$partial" "${proxy_args[@]}" "$1"; then
+            mv "$partial" "$filename"
+            cd -
+            return
+        fi
+        sleep 2
+    done
     cd -
+    return 1
 }
 
 VERSION=1.46.0
