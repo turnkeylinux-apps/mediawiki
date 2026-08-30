@@ -4,7 +4,12 @@ dl() {
     local proxy_args=()
     [ -n "${FAB_HTTP_PROXY:-}" ] && proxy_args=(--proxy "$FAB_HTTP_PROXY")
     cd "$2"
-    curl --proto '=https' --tlsv1.2 -L -f -O "${proxy_args[@]}" "$1"
+    # Wikimedia's CDN may cancel long-lived HTTP/2 transfers. Keep the
+    # integrity check below authoritative, but tolerate transient transport
+    # failures while fetching the release archive.
+    curl --proto '=https' --tlsv1.2 --http1.1 -L -f \
+        --retry 3 --retry-delay 2 --retry-all-errors \
+        -O "${proxy_args[@]}" "$1"
     cd -
 }
 
