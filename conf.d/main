@@ -9,11 +9,12 @@ ADMIN_PASS=turnkey123
 
 SRC=/usr/local/src
 WEBROOT=/var/www/mediawiki
+VERSION=1.46.0
+ARCHIVE=$SRC/mediawiki-${VERSION}.tar.gz
 
-tar xf $SRC/mediawiki-*.tar.gz -C $SRC
-rm -rf $SRC/mediawiki-*.tar.gz
-mv $SRC/mediawiki-* $WEBROOT
-chown -R www-data:www-data $WEBROOT
+tar xf "$ARCHIVE" -C "$SRC" --no-same-owner --no-same-permissions
+rm -f "$ARCHIVE"
+mv "$SRC/mediawiki-${VERSION}" "$WEBROOT"
 
 a2enmod headers
 a2dissite 000-default
@@ -51,7 +52,6 @@ for information on using the wiki software.<br><br>
 
 # update default logos to tkl ones
 mv /usr/local/src/*.png $WEBROOT/resources/assets/
-chown www-data:www-data $WEBROOT/resources/assets/*.png
 sed -i "\|'1x' =>| s|change-your-logo.svg|change-your-logo-tkl.png|" $WEBROOT/LocalSettings.php
 sed -i "\|'icon' =>| s|change-your-logo-icon.svg|change-your-logo-icon-tkl.png|" $WEBROOT/LocalSettings.php
 
@@ -82,6 +82,15 @@ $wgVisualEditorAvailableNamespaces = [
 
 $wgVisualEditorEnableWikitext = true;
 EOF
+
+# Keep executable application/configuration code out of the web service's
+# write boundary. Media uploads remain writable by MediaWiki.
+chown -R root:root "$WEBROOT"
+find "$WEBROOT" -type d -exec chmod 0755 {} +
+find "$WEBROOT" -type f -exec chmod 0644 {} +
+chown -R www-data:www-data "$WEBROOT/images"
+chown root:www-data "$WEBROOT/LocalSettings.php"
+chmod 0640 "$WEBROOT/LocalSettings.php"
 
 # stop services
 service mysql stop
